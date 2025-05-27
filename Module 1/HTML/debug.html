@@ -1,0 +1,206 @@
+<script>
+  // DEBUGGING TIP:
+  // Open Chrome DevTools: Right-click > Inspect or Ctrl+Shift+I (Cmd+Opt+I on Mac)
+  // Use Console tab to see logs and errors.
+  // Use Sources tab to set breakpoints and step through JS.
+  // Use Application tab to inspect Local Storage under Storage > Local Storage.
+
+  // Helper function for debug logging
+  function debugLog(message, data = null) {
+    if (data !== null) {
+      console.log(`[DEBUG] ${message}`, data);
+    } else {
+      console.log(`[DEBUG] ${message}`);
+    }
+  }
+
+  // Save Registration Preferences with debug logs
+  function saveRegistrationPrefs() {
+    try {
+      const regData = {
+        fullname: document.getElementById("fullname").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        event: document.getElementById("event").value,
+        message: document.getElementById("message").value
+      };
+      localStorage.setItem('registrationPrefs', JSON.stringify(regData));
+      debugLog("Registration preferences saved", regData);
+    } catch (e) {
+      console.error("Error saving registration preferences", e);
+    }
+  }
+
+  function loadRegistrationPrefs() {
+    try {
+      const regData = JSON.parse(localStorage.getItem('registrationPrefs'));
+      debugLog("Loaded registration preferences", regData);
+      if (regData) {
+        document.getElementById("fullname").value = regData.fullname || "";
+        document.getElementById("email").value = regData.email || "";
+        document.getElementById("phone").value = regData.phone || "";
+        document.getElementById("event").value = regData.event || "Community Cleanup";
+        document.getElementById("message").value = regData.message || "";
+      }
+    } catch (e) {
+      console.error("Error loading registration preferences", e);
+    }
+  }
+
+  function saveFeedbackPrefs() {
+    try {
+      const fbData = {
+        participant: document.getElementById("participant").value,
+        eventAttended: document.getElementById("eventAttended").value,
+        rating: document.getElementById("rating").value,
+        comments: document.getElementById("comments").value
+      };
+      localStorage.setItem('feedbackPrefs', JSON.stringify(fbData));
+      debugLog("Feedback preferences saved", fbData);
+    } catch (e) {
+      console.error("Error saving feedback preferences", e);
+    }
+  }
+
+  function loadFeedbackPrefs() {
+    try {
+      const fbData = JSON.parse(localStorage.getItem('feedbackPrefs'));
+      debugLog("Loaded feedback preferences", fbData);
+      if (fbData) {
+        document.getElementById("participant").value = fbData.participant || "";
+        document.getElementById("eventAttended").value = fbData.eventAttended || "Community Cleanup";
+        document.getElementById("rating").value = fbData.rating || "5";
+        document.getElementById("comments").value = fbData.comments || "";
+      }
+    } catch (e) {
+      console.error("Error loading feedback preferences", e);
+    }
+  }
+
+  // Registration form submit handler with debug
+  document.getElementById("registrationForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    try {
+      const name = document.getElementById("fullname").value;
+      const email = document.getElementById("email").value;
+      const event = document.getElementById("event").value;
+      debugLog("Submitting registration form", { name, email, event });
+
+      const feedback = document.getElementById("registrationFeedback");
+      feedback.innerHTML = `
+        <div style="background:#e6f7ff; padding:1em; border-left:5px solid #1890ff;">
+          Thank you, <strong>${name}</strong>! You have registered for <em>${event}</em>.
+        </div>
+      `;
+    } catch (err) {
+      console.error("Error in registration form submit", err);
+    }
+  });
+
+  // Feedback form submit handler with debug
+  document.getElementById("feedbackForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    try {
+      const participant = document.getElementById("participant").value;
+      const eventAttended = document.getElementById("eventAttended").value;
+      const rating = document.getElementById("rating").value;
+      const comments = document.getElementById("comments").value;
+
+      debugLog("Submitting feedback form", { participant, eventAttended, rating, comments });
+
+      const feedbackDisplay = document.getElementById("feedbackDisplay");
+      feedbackDisplay.innerHTML = `
+        <div style="background:#f0fff0; padding:1em; border-left:5px solid #4CAF50;">
+          <p>Thank you, <strong>${participant}</strong>, for your feedback on <em>${eventAttended}</em>.</p>
+          <p>Rating: <strong>${rating}</strong></p>
+          <p>Comments: ${comments ? comments : '<em>No comments provided</em>'}</p>
+        </div>
+      `;
+    } catch (err) {
+      console.error("Error in feedback form submit", err);
+    }
+  });
+
+  // Geolocation & Map Initialization with debug logs
+  function initMap() {
+    const mapDiv = document.getElementById('map');
+    const statusDiv = document.getElementById('mapStatus');
+
+    if (!navigator.geolocation) {
+      statusDiv.textContent = 'Geolocation is not supported by your browser.';
+      mapDiv.textContent = '';
+      debugLog('Geolocation not supported');
+      return;
+    }
+
+    statusDiv.textContent = 'Locating…';
+    debugLog('Requesting geolocation');
+
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        const userLat = position.coords.latitude;
+        const userLon = position.coords.longitude;
+        debugLog('Geolocation success', { latitude: userLat, longitude: userLon });
+
+        statusDiv.textContent = '';
+
+        // Initialize map centered on user location
+        const map = L.map('map').setView([userLat, userLon], 13);
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Marker for user's location
+        const userMarker = L.marker([userLat, userLon]).addTo(map)
+          .bindPopup('You are here').openPopup();
+
+        // Add event location markers
+        const eventLocations = [
+          { name: "Community Cleanup", coords: [40.7128, -74.0060] },
+          { name: "Food Drive", coords: [40.730610, -73.935242] },
+          { name: "Health Fair", coords: [40.7580, -73.9855] }
+        ];
+        eventLocations.forEach(event => {
+          L.marker(event.coords).addTo(map)
+            .bindPopup(`<b>${event.name}</b>`);
+          debugLog('Added event marker', event);
+        });
+      },
+      error => {
+        let msg;
+        switch(error.code) {
+          case error.PERMISSION_DENIED:
+            msg = "User denied the request for Geolocation.";
+            break;
+          case error.POSITION_UNAVAILABLE:
+            msg = "Location information is unavailable.";
+            break;
+          case error.TIMEOUT:
+            msg = "The request to get user location timed out.";
+            break;
+          default:
+            msg = "An unknown error occurred.";
+            break;
+        }
+        statusDiv.textContent = msg;
+        mapDiv.textContent = '';
+        console.error("Geolocation error:", msg);
+      }
+    );
+  }
+
+  // Load saved prefs and init map on DOM ready
+  window.addEventListener('DOMContentLoaded', () => {
+    debugLog('DOM fully loaded and parsed');
+    loadRegistrationPrefs();
+    loadFeedbackPrefs();
+    initMap();
+  });
+
+  // Save prefs when input changes
+  document.getElementById("registrationForm").addEventListener("input", saveRegistrationPrefs);
+  document.getElementById("feedbackForm").addEventListener("input", saveFeedbackPrefs);
+
+</script>

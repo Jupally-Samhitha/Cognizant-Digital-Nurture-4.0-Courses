@@ -1,0 +1,27 @@
+/* Body styles */
+body {
+    background-color: #f0f8ff;
+    font-family: Arial, sans-serif;
+}
+
+/* Header styles */
+h2 {
+    color: #333;
+    text-transform: uppercase;
+}
+
+/* Paragraph styles */
+p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #444;
+}
+
+/* Footer styles */
+footer {
+    background-color: #eaeaea;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}

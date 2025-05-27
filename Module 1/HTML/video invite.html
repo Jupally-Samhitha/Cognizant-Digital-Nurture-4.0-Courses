@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Community Events</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+    }
+    header {
+      background: #333;
+      color: white;
+      padding: 1em;
+      text-align: center;
+    }
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      background: #444;
+    }
+    nav ul li {
+      margin: 0 15px;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      padding: 0.5em;
+      display: inline-block;
+    }
+    nav ul li a:hover {
+      background: #555;
+    }
+    .welcome-message {
+      background-color: #fff8dc;
+      text-align: center;
+      padding: 1em;
+      font-size: 1.2em;
+      border-bottom: 2px solid #ccc;
+    }
+    main {
+      padding: 1em;
+    }
+    section {
+      background: white;
+      padding: 1em;
+      margin-bottom: 2em;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .gallery img {
+      width: 300px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    video {
+      display: block;
+      margin: 0 auto 1em auto;
+      max-width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.15);
+    }
+    .registration-form,
+    .feedback-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    input, select, textarea, button {
+      padding: 10px;
+      font-size: 1em;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #333;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #555;
+    }
+    footer {
+      text-align: center;
+      padding: 1em;
+      background: #333;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Community Events</h1>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#gallery">Events</a></li>
+        <li><a href="#media-events">Media Events</a></li>
+        <li><a href="#register">Register</a></li>
+        <li><a href="#feedback">Feedback</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div id="welcome" class="welcome-message">
+    <p>Welcome to our Community Events portal! Join us and make a difference!</p>
+  </div>
+
+  <main>
+    <section id="home">
+      <h2>Home</h2>
+      <p>Stay informed and involved in our local community efforts.</p>
+    </section>
+
+    <section id="gallery">
+      <h2>Community Events Gallery</h2>
+      <div class="gallery">
+        <img src="event1.jpg" alt="Event 1">
+        <img src="event2.jpg" alt="Event 2">
+        <img src="event3.jpg" alt="Event 3">
+        <img src="event4.jpg" alt="Event 4">
+      </div>
+    </section>
+
+    <section id="media-events">
+      <h2>Media Events - Video Invite</h2>
+      <video width="640" height="360" controls>
+        <source src="community_invite.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <p>Watch this invite to learn more about our upcoming community events!</p>
+    </section>
+
+    <!-- Event Registration Form -->
+    <section id="register">
+      <h2>Event Registration</h2>
+      <form id="registrationForm" class="registration-form">
+        <label for="fullname">Full Name:</label>
+        <input type="text" id="fullname" name="fullname" required />
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" />
+
+        <label for="event">Select Event:</label>
+        <select id="event" name="event">
+          <option value="Community Cleanup">Community Cleanup</option>
+          <option value="Food Drive">Food Drive</option>
+          <option value="Health Fair">Health Fair</option>
+        </select>
+
+        <label for="message">Message (Optional):</label>
+        <textarea id="message" name="message" rows="4"></textarea>
+
+        <button type="submit">Register</button>
+      </form>
+      <div id="registrationFeedback" style="margin-top: 1em;"></div>
+    </section>
+
+    <!-- Event Feedback Section -->
+    <section id="feedback">
+      <h2>Event Feedback</h2>
+      <form id="feedbackForm" class="feedback-form">
+        <label for="participant">Your Name:</label>
+        <input type="text" id="participant" name="participant" required />
+
+        <label for="eventAttended">Event Attended:</label>
+        <select id="eventAttended" name="eventAttended">
+          <option value="Community Cleanup">Community Cleanup</option>
+          <option value="Food Drive">Food Drive</option>
+          <option value="Health Fair">Health Fair</option>
+        </select>
+
+        <label for="rating">Rating:</label>
+        <select id="rating" name="rating">
+          <option value="5">Excellent</option>
+          <option value="4">Very Good</option>
+          <option value="3">Good</option>
+          <option value="2">Fair</option>
+          <option value="1">Poor</option>
+        </select>
+
+        <label for="comments">Comments:</label>
+        <textarea id="comments" name="comments" rows="4"></textarea>
+
+        <button type="submit">Submit Feedback</button>
+      </form>
+      <div id="feedbackDisplay" style="margin-top: 1em;"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Community Organization</p>
+  </footer>
+
+  <script>
+    // Handle Event Registration
+    document.getElementById("registrationForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const name = document.getElementById("fullname").value;
+      const email = document.getElementById("email").value;
+      const event = document.getElementById("event").value;
+
+      const feedback = document.getElementById("registrationFeedback");
+      feedback.innerHTML = `
+        <div style="background:#e6f7ff; padding:1em; border-left:5px solid #1890ff;">
+          Thank you, <strong>${name}</strong>! You have registered for <em>${event}</em>.
+          A confirmation email will be sent to <strong>${email}</strong>.
+        </div>
+      `;
+      e.target.reset();
+    });
+
+    // Handle Event Feedback
+    document.getElementById("feedbackForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const name = document.getElementById("participant").value;
+      const event = document.getElementById("eventAttended").value;
+      const rating = document.getElementById("rating").value;
+      const comments = document.getElementById("comments").value;
+
+      const display = document.getElementById("feedbackDisplay");
+      const message = document.createElement("div");
+      message.style.background = "#e6ffe6";
+      message.style.borderLeft = "5px solid #33cc33";
+      message.style.padding = "1em";
+      message.style.marginTop = "1em";
+      message.style.borderRadius = "5px";
+
+      message.innerHTML = `
+        <strong>${name}</strong> rated <em>${event}</em> with <strong>${rating}/5</strong>.<br>
+        ${comments ? `<em>Comment:</em> ${comments}` : ""}
+      `;
+      display.appendChild(message);
+      e.target.reset();
+    });
+  </script>
+
+</body>
+</html>

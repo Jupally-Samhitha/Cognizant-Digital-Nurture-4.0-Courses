@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Community Events</title>
+  <style>
+    /* (All previous styles omitted for brevity; use the full styles from previous code) */
+
+    /* Map container */
+    #map {
+      height: 400px;
+      width: 100%;
+      margin-top: 1em;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.15);
+    }
+  </style>
+  <!-- Leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-sA+ePZ1nIrOjaHEF2e0Xe6+NciEGDR7gDs08U/5o9yg="
+    crossorigin=""
+  />
+</head>
+<body>
+
+  <header>
+    <h1>Community Events</h1>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#gallery">Events</a></li>
+        <li><a href="#media-events">Media Events</a></li>
+        <li><a href="#register">Register</a></li>
+        <li><a href="#feedback">Feedback</a></li>
+        <li><a href="#event-map">Event Map</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div id="welcome" class="welcome-message">
+    <p>Welcome to our Community Events portal! Join us and make a difference!</p>
+  </div>
+
+  <main>
+    <!-- (Other sections omitted for brevity, include previous full code here) -->
+
+    <!-- Event Mapping Section -->
+    <section id="event-map">
+      <h2>Event Mapping - Find Events Near You</h2>
+      <p>Allow location access to find nearby community events on the map.</p>
+      <div id="map">Loading map...</div>
+      <div id="mapStatus" style="margin-top: 1em; color: red;"></div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Community Organization</p>
+  </footer>
+
+  <!-- Leaflet JS -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-o9N1j8rGvJPz3P0eAB1s2+otz8PxZ1bqmk4f5YB9w0I="
+    crossorigin=""
+  ></script>
+
+  <script>
+    // --- Previous scripts for forms and preferences should be included here ---
+    // For brevity, include all form related JS from the prior full code block.
+
+    // Geolocation & Map Initialization
+    function initMap() {
+      const mapDiv = document.getElementById('map');
+      const statusDiv = document.getElementById('mapStatus');
+
+      if (!navigator.geolocation) {
+        statusDiv.textContent = 'Geolocation is not supported by your browser.';
+        mapDiv.textContent = '';
+        return;
+      }
+
+      // Sample event locations with coordinates
+      const eventLocations = [
+        { name: "Community Cleanup", coords: [40.7128, -74.0060] },  // New York example
+        { name: "Food Drive", coords: [40.730610, -73.935242] },    // NY area
+        { name: "Health Fair", coords: [40.7580, -73.9855] }        // Times Square
+      ];
+
+      statusDiv.textContent = 'Locating…';
+
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          const userLat = position.coords.latitude;
+          const userLon = position.coords.longitude;
+
+          statusDiv.textContent = '';
+
+          // Initialize map centered on user location
+          const map = L.map('map').setView([userLat, userLon], 13);
+
+          // Add OpenStreetMap tiles
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+          }).addTo(map);
+
+          // Marker for user's location
+          const userMarker = L.marker([userLat, userLon]).addTo(map)
+            .bindPopup('You are here').openPopup();
+
+          // Add event location markers
+          eventLocations.forEach(event => {
+            L.marker(event.coords).addTo(map)
+              .bindPopup(`<b>${event.name}</b>`);
+          });
+        },
+        error => {
+          switch(error.code) {
+            case error.PERMISSION_DENIED:
+              statusDiv.textContent = "User denied the request for Geolocation.";
+              break;
+            case error.POSITION_UNAVAILABLE:
+              statusDiv.textContent = "Location information is unavailable.";
+              break;
+            case error.TIMEOUT:
+              statusDiv.textContent = "The request to get user location timed out.";
+              break;
+            default:
+              statusDiv.textContent = "An unknown error occurred.";
+              break;
+          }
+          document.getElementById('map').textContent = '';
+        }
+      );
+    }
+
+    // Run map init on DOM load
+    window.addEventListener('DOMContentLoaded', () => {
+      initMap();
+      // Also call loadRegistrationPrefs(), loadFeedbackPrefs(), etc from previous scripts
+    });
+  </script>
+
+</body>
+</html>

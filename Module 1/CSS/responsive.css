@@ -1,0 +1,54 @@
+/* ============================= */
+/* Base styles for large screens */
+/* ============================= */
+body {
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul {
+    display: flex; /* Horizontal navigation */
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    background-color: #3498db;
+}
+
+nav li {
+    margin: 0 15px;
+    padding: 10px;
+}
+
+img.responsive-img {
+    width: 50%;
+    height: auto;
+}
+
+/* ============================= */
+/* Responsive styles for screens < 768px */
+/* ============================= */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column; /* Stack links vertically */
+        align-items: center;
+    }
+
+    nav li {
+        margin: 10px 0;
+    }
+
+    body {
+        font-size: 4vw; /* Responsive text using viewport width */
+    }
+
+    img.responsive-img {
+        width: 90%; /* Shrink images for small screens */
+    }
+
+    .container {
+        width: 90%;
+        margin: auto;
+    }
+}

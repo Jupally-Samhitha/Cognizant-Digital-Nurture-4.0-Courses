@@ -1,0 +1,52 @@
+/* ============================= */
+/* Base layout styles            */
+/* ============================= */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navigation bar */
+nav ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    background-color: #222;
+    color: #fff;
+}
+
+nav li {
+    margin: 10px;
+    padding: 10px;
+}
+
+/* Responsive image test */
+img.banner {
+    width: 100%;
+    height: auto;
+}
+
+/* Container with fixed width issue (intentionally problematic) */
+.container {
+    width: 1200px; /* This may cause overflow on smaller screens */
+    margin: auto;
+    background-color: #f0f0f0;
+    padding: 20px;
+}
+
+/* Media query to debug responsiveness */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav li {
+        margin: 5px 0;
+    }
+}

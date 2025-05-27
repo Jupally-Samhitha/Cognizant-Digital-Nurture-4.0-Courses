@@ -1,0 +1,27 @@
+/* ============================= */
+/* Table Styling                 */
+/* ============================= */
+
+table {
+    width: 100%;
+    border-collapse: collapse;       /* Merge adjacent borders */
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+}
+
+th, td {
+    border: 1px solid #ccc;          /* Light gray border */
+    padding: 12px 15px;              /* Spacing inside cells */
+    text-align: center;              /* Center-aligned text */
+}
+
+/* Header background color */
+th {
+    background-color: #3498db;
+    color: white;
+}
+
+/* Zebra striping for rows */
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}

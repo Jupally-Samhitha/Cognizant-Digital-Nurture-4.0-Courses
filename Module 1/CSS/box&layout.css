@@ -1,0 +1,34 @@
+/* ============================= */
+/* Event card box styling        */
+/* ============================= */
+.eventCard {
+    margin: 20px;                    /* Space around the card */
+    padding: 15px;                   /* Space inside the card */
+    border: 2px solid #ccc;          /* Visible border */
+    background-color: #f9f9f9;       /* Light background */
+    border-radius: 8px;              /* Rounded corners */
+}
+
+
+/* ============================= */
+/* Form field outline on select  */
+/* ============================= */
+input:focus, select:focus, textarea:focus {
+    outline: 2px solid #3498db;      /* Blue outline to show focus */
+    border-color: #3498db;
+}
+
+
+/* ============================= */
+/* Visibility vs Display         */
+/* ============================= */
+
+/* Hidden but takes space */
+.hidden-box {
+    visibility: hidden;
+}
+
+/* Hidden and does NOT take space */
+.removed-box {
+    display: none;
+}
